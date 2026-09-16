@@ -1,0 +1,38 @@
+CREATE TABLE EMPBOX(
+emp_id NUMBER(5),
+emp_name VARCHAR2(30),
+job_id VARCHAR2(20),
+basic_salary NUMBER(10,2),
+manager_id NUMBER(5)
+);
+
+INSERT INTO EMPBOX VALUES(101,'Rahul','CLERK',25000,121);
+INSERT INTO EMPBOX VALUES(102,'Priya','MANAGER',60000,100);
+INSERT INTO EMPBOX VALUES(103,'Amit','CLERK',28000,125);
+INSERT INTO EMPBOX VALUES(104,'Karan','ANALYST',55000,102);
+INSERT INTO EMPBOX VALUES(105,'Sweta','CLERK',22000,118);
+
+COMMIT;
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+
+	CURSOR c1 IS 
+	SELECT* FROM
+	(
+		SELECT emp_name,basic_salary FROM EMPBOX ORDER BY basic_salary DESC 
+	)
+	
+	WHERE ROWNUM <= 3;
+
+BEGIN
+
+	FOR item IN c1 LOOP
+
+		DBMS_OUTPUT.PUT_LINE('Name = ' || item.emp_name||
+					',Basic Salary = ' || item.basic_salary);
+
+	END LOOP;
+END;
+/
